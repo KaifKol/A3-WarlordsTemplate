@@ -6,8 +6,6 @@
 
 This repository contains a `description.ext` file configured as a **Warlords mission template for Arma 3**. It is intended to be used as a base and **must be customized** before running the mission.
 
-Below is a breakdown of the file **by configuration blocks**, not by line numbers, explaining what **must** be changed and what **can** be changed.
-
 ---
 
 ### Mandatory Configuration
@@ -63,8 +61,6 @@ Allows overriding default requisition costs for assets.
 ### Обзор
 
 Данный репозиторий содержит файл `description.ext`, настроенный как **шаблон миссии Warlords для Arma 3**. Он предназначен для использования в качестве базы и **обязательно требует редактирования** перед запуском.
-
-Ниже файл разобран **по конфигурационным блокам**, а не по номерам строк.
 
 ---
 
@@ -126,6 +122,7 @@ Allows overriding default requisition costs for assets.
     <img src="https://i.postimg.cc/pXzW7R3X/1.png" width="1500">
   </a>
 </p>
+
 
 
 
