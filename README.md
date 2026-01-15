@@ -54,6 +54,10 @@ Allows overriding default requisition costs for assets.
 * Always verify classnames via the Config Viewer
 * Test the mission after every major change
 
+### Installation
+* Place the `description.ext` file into the mission folder.
+* Optionally, you may also add the `images` folder to the same directory.
+
 ---
 
 ## Русский
@@ -111,6 +115,10 @@ Allows overriding default requisition costs for assets.
 * Шаблон рассчитан на понимание системы Warlords в Arma 3
 * Проверяйте class name через Config Viewer
 * Тестируйте миссию после изменений
+
+### Установка
+* Поместите файл `description.ext` в папку с миссией.
+* При необходимости можно также добавить туда папку `images`.
 
 ---
 
