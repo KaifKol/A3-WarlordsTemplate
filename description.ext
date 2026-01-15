@@ -1,0 +1,334 @@
+// https://community.bistudio.com/wiki/Description.ext
+
+// https://community.bistudio.com/wiki/Description.ext#Mission_Information
+onLoadMission = $STR_A3_WL_modRules; // Displays a message while the mission is loading. Note that a mission that takes very little time to load will only display the message for a short time. In OFP this is the name you see when selecting a mission in MP and also the name that is presented to the Multiplayer browser. (https://community.bistudio.com/wiki/Description.ext#onLoadMission); $STR_A3_WL_modRules = Default Warlords description
+onLoadName = abc123; // String (usually mission name) shown during mission loading. The string is shown in a slightly larger font above the loadScreen. The onLoadMission text is placed below the load screen and the header gameType determines the game type on top of the box. (https://community.bistudio.com/wiki/Description.ext#onLoadMission) 
+// loadScreen = "images\Warlords.jpg"; // If you want this, uncomment the line. The picture to be shown while the mission is loaded. The path is relative to the mission folder. Must be in PAA file format. 2:1 aspect ratio (different aspect are rendered correctly as well, but won't cover the whole area). Ideally 1024x512 pixels. (https://community.bistudio.com/wiki/Description.ext#loadScreen)
+// overviewPicture = "images\Warlords.jpg"; // If you want this, uncomment the line. Path to image which will be displayed when the mission is highlighted on the mission selection screen. Image should be .paa format and in 2:1 aspect ratio – ideally 1024×512 (Arma 3). (https://community.bistudio.com/wiki/Description.ext#overviewPicture)
+// overviewText = $STR_A3_WL_modRules; // If you want this, uncomment the line. Text to be displayed below the overviewPicture on the mission selection screen when the mission is available to play. Please note that the same parameter can be defined in 3DEN in Attributes->General->Overview->Text, but 'overviewText' from 'description.ext' has a priority. To use localized string either in 3DEN field or in 'description.ext', prefix stringtable ID with @. (https://community.bistudio.com/wiki/Description.ext#overviewText)
+dev = ""; // Paste your Nickname
+author = Bohemia Interactive & ; // Paste your Nickname
+
+// https://community.bistudio.com/wiki/Description.ext#Respawn/Revive
+respawn = "BASE"; // Sets soldiers and vehicles respawn type. (https://community.bistudio.com/wiki/Description.ext#respawn)
+respawnDelay = 10; // Set respawn delay in seconds. (https://community.bistudio.com/wiki/Description.ext#respawnDelay)
+respawnOnStart = -1; // Respawn player when he joins the game. Available only for INSTANT and BASE respawn types. (https://community.bistudio.com/wiki/Description.ext#respawnOnStart)
+
+// Other
+aiKills = 1; // Enables AI units score to appear in score table. (https://community.bistudio.com/wiki/Description.ext#aiKills)
+enableDebugConsole = 1; // Allows access to the Debug Console in multiplayer scenarios outside of the editor. This has no effect for singleplayer scenarios. (https://community.bistudio.com/wiki/Description.ext#enableDebugConsole)
+
+// https://community.bistudio.com/wiki/Description.ext#header
+class Header // This class defines mission type and other settings displayed in the multiplayer browser.
+{
+	gameType = Warlords;
+	minPlayers = 1; // Minimum number of players the mission supports.  
+	maxPlayers = 24; // Maximum number of players the mission supports.  
+};
+
+// https://community.bistudio.com/wiki/Arma_3:_MP_Warlords
+
+// https://community.bistudio.com/wiki/Arma_3:_MP_Warlords#1._Parameters
+class Params
+{
+	class BIS_WLStartingDaytime // Starting daytime of the mission.
+	{
+		title = "$STR_A3_combatpatrol_params_1";
+		values[] = { 100, -6, 0, 6, -12 };
+		texts[] = { "$STR_A3_WL_param37_value1", "$STR_A3_combatpatrol_params_3", "$STR_A3_MP_COOP_m03_noon", "$STR_A3_MP_COOP_m03_evening", "$STR_A3_combatpatrol_params_6" };
+		default = 100;
+	};
+	class BIS_WLTimeAcceleration // Time acceleration multiplier.
+	{
+		title = "$STR_A3_WL_param2_title";
+		values[] = { 1, 2, 4, 6, 8, 10, 12, 14, 16, 18, 20, 22, 24 };
+		texts[] = { "$STR_special_none", "x2", "x4", "x6", "x8", "x10", "x12", "x14", "x16", "x18", "x20", "x22", "x24" };
+		default = 12;
+	};
+	class BIS_WLProgress // Forced Warlords progress level.
+	{
+		title = "$STR_A3_WL_param1_title";
+		values[] = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13 };
+		texts[] = {
+			"$STR_special_none",
+			"$STR_A3_WL_forcedProgress_perc_1",
+			"$STR_A3_WL_forcedProgress_perc_2",
+			"$STR_A3_WL_forcedProgress_perc_3",
+			"$STR_A3_WL_forcedProgress_perc_4",
+			"$STR_A3_WL_forcedProgress_perc_5",
+			"$STR_A3_WL_forcedProgress_perc_6",
+			"$STR_A3_WL_forcedProgress_perc_7",
+			"$STR_A3_WL_forcedProgress_perc_8",
+			"$STR_A3_WL_forcedProgress_perc_9",
+			"$STR_A3_WL_forcedProgress_perc_10",
+			"$STR_A3_WL_forcedProgress_perc_11",
+			"$STR_A3_WL_forcedProgress_perc_12"
+		};
+
+		default = 1;
+	};
+
+	class BIS_WLFTEnabled
+	{
+		title = "$STR_A3_fastravel1"; // Fast travel availability.
+		values[] = {1, 0, 2, 3, 4};
+		texts[] = { "$STR_A3_WL_param3_value1", "$STR_A3_WL_param3_value2", "$STR_A3_WL_param3_value3", "$STR_A3_WL_param3_value4", "$STR_A3_WL_param3_value5" };
+		default = 1;
+	};
+
+	class BIS_WLScanEnabled // Enemy scan feature.
+	{
+		title = "$STR_A3_WL_param4_title";
+		values[] = { 1, 0 };
+		texts[] = { "$STR_DISP_OPT_ENABLED", "$STR_DISP_OPT_DISABLED" };
+		default = 1;
+	};
+
+	class BIS_WLVotingResetEnabled // Voting reset option.
+	{
+		title = "$STR_A3_WL_menu_resetvoting";
+		values[] = { 1, 0 };
+		texts[] = { "$STR_DISP_OPT_ENABLED", "$STR_DISP_OPT_DISABLED" };
+		default = 1;
+	};
+
+	class BIS_WLAIVoting // AI voting participation.
+	{
+		title = "$STR_A3_WL_param5_title";
+		values[] = { 1, 0 };
+		texts[] = { "$STR_DISP_OPT_ENABLED", "$STR_DISP_OPT_DISABLED" };
+		default = 0;
+	};
+
+	class BIS_WLArsenalEnabled // Virtual Arsenal access.
+	{
+		title = "$STR_A3_Arsenal";
+		values[] = { 1, 0 };
+		texts[] = { "$STR_DISP_OPT_ENABLED", "$STR_DISP_OPT_DISABLED" };
+		default = 0;
+	};
+
+	class BIS_WLMarkersTransparency // Map marker transparency.
+	{
+		title = "$STR_A3_WL_param7_title";
+		values[] = { 4, 3, 2, 1, 0 };
+		texts[] = { "$STR_A3_WL_param7_value1", "$STR_A3_WL_markerAlpha_perc_1", "$STR_A3_WL_markerAlpha_perc_2", "$STR_A3_WL_markerAlpha_perc_3", "$STR_A3_WL_param7_value2" };
+		default = 2;
+	};
+
+	class BIS_WLPlayersTransparency // Player icon transparency on map.
+	{
+		title = "$STR_A3_WL_param8_title";
+		values[] = { 4, 3, 2, 1, 0 };
+		texts[] = { "$STR_A3_WL_param7_value1", "$STR_A3_WL_markerAlpha_perc_1", "$STR_A3_WL_markerAlpha_perc_2", "$STR_A3_WL_markerAlpha_perc_3", "$STR_A3_WL_param7_value2" };
+		default = 2;
+	};
+
+	class BIS_WLFatigueEnabled // Stamina and fatigue system.
+	{
+		title = "$STR_A3_fatigue1";
+		values[] = { 1, 0 };
+		texts[] = { "$STR_DISP_OPT_ENABLED", "$STR_DISP_OPT_DISABLED" };
+		default = 1;
+	};
+
+	class BIS_WLMusic // Background music.
+	{
+		title = "$STR_A3_rscattributemusic_title";
+		values[] = { 1, 0 };
+		texts[] = { "$STR_DISP_OPT_ENABLED", "$STR_DISP_OPT_DISABLED" };
+		default = 1;
+	};
+
+	class BIS_WLVoice // AI voice lines / radio chatter.
+	{
+		title = "$STR_A3_orange_faction_idap_cfgidentities_expo_name";
+		values[] = { 1, 0 };
+		texts[] = { "$STR_DISP_OPT_ENABLED", "$STR_DISP_OPT_DISABLED" };
+		default = 1;
+	};
+
+	class BIS_WLStartCP // Starting Command Points (CP).
+	{
+		title = "$STR_A3_WL_param12_title";
+		values[] = { 0, 100, 250, 500, 1000, 2500, 5000 };
+		texts[] = { "0", "100", "250", "500", "1000", "2500", "5000" };
+		default = 500;
+	};
+
+	class BIS_WLCPMultiplier // Command Points gain multiplier.
+	{
+		title = "$STR_A3_WL_param13_title";
+		values[] = { 1, 2, 3, 4, 5 };
+		texts[] = { "1x", "2x", "3x", "4x", "5x" };
+		default = 1;
+	};
+
+	class BIS_WLVotingTimeout // Voting duration (in seconds).
+	{
+		title = "$STR_A3_WL_param14_title";
+		values[] = { 5, 10, 15, 20, 25, 30 };
+		texts[] = { "5", "10", "15", "20", "25", "30" };
+		default = 15;
+	};
+
+	class BIS_WLVehicleSpan // Vehicle respawn time (in seconds).
+	{
+		title = "$STR_A3_WL_param15_title";
+		values[] = { 900, 1800, 3600, 5400, 7200, 1000000 };
+		texts[] = { "15", "30", "60", "90", "120", "$STR_A3_WL_param15_value1" };
+		default = 3600;
+	};
+};
+
+// https://community.bistudio.com/wiki/Arma_3:_MP_Warlords#2._Custom_asset_lists
+class CfgWLRequisitionPresets
+{
+	class MyWLAssetList // --- class name used in the Init module
+	{
+		class WEST // --- assets available for BLUFOR
+		{
+			class Infantry
+			{
+				class B_Soldier_F // --- must be asset class name
+				{
+					cost = 100; // --- Command Points required
+					requirements[] = {}; // --- dispositions required ("A" = airstrip, "H" = helipad, "W" = water (harbor))
+				};
+			};
+
+			class Vehicles
+			{
+				class B_Quadbike_01_F
+				{
+					cost = 50;
+					requirements[] = {};
+				};
+			};
+
+			class Aircraft
+			{
+				class B_Plane_CAS_01_F
+				{
+					cost = 7500;
+					requirements[] = { "A" };
+				};
+			};
+
+			class Naval
+			{
+				class O_Boat_Armed_01_hmg_F
+				{
+					cost = 500;
+					requirements[] = { "W" };
+				};
+			};
+
+			class Gear
+			{
+				class Box_NATO_Ammo_F
+				{
+					cost = 200;
+					requirements[] = {};
+				};
+			};
+
+			class Defences
+			{
+				class B_HMG_01_F
+				{
+					cost = 250;
+					requirements[] = {};
+					offset[] = { 0, 5.3, 0 }; // --- custom offset (optional)
+				};
+			};
+		};
+
+		class EAST // --- assets available for OPFOR
+		{
+			// --- rest of input
+		};
+	};
+};
+
+// https://community.bistudio.com/wiki/Arma_3:_MP_Warlords#3._Custom_factions (If you dont need this - comment the block)
+class CfgWLFactionAssets
+{
+	class WEST // --- BLUFOR
+	{
+		class InfantryUnits // --- for BLUFOR and OPFOR, only individual unit classnames are defined as the system doesn't spawn predefined groups
+		{
+			class B_Story_SF_Captain_F {}; // --- asset classname to be added to the spawn list
+		};
+	};
+
+	class EAST // --- OPFOR
+	{
+		class InfantryUnits
+		{
+			class O_V_Soldier_hex_F {};
+			class O_V_Soldier_M_ghex_F {};
+		};
+	};
+
+	class INDEP // --- Independent
+	{
+		class InfantryGroups // --- independent faction uses group configs to spawn garrisons; you can define various group types to be randomly used
+		{
+			groups[] = {
+				"'Indep' >> 'IND_G_F' >> 'Infantry' >> 'I_G_InfSquad_Assault'", // --- use this part of the config path found in the Config viewer (CfgGroups)
+				"'Indep' >> 'IND_C_F' >> 'Infantry' >> 'BanditCombatGroup'" // --- NOTE THE QUOTATION MARKS AND APOSTROPHES
+			};
+		};
+
+		class MotorizedGroups
+		{
+			groups[] = {
+				//
+			};
+		};
+
+		class MechanizedGroups
+		{
+			groups[] = {
+				//
+			};
+		};
+
+		class ArmoredGroups
+		{
+			groups[] = {
+				//
+			};
+		};
+	};
+};
+
+// https://community.bistudio.com/wiki/Arma_3:_MP_Warlords#5._Overriding_asset_costs (If you dont need this - comment the block)
+class CfgWLAssetCostOverride
+{
+	B_Soldier_F = 50;		// --- example asset classname
+	Scan = 200;				// --- sector scan
+	Airdrop = 200;			// --- airdrop
+	FastTravel = 200;		// --- fast travel
+	LastLoadout = 200;		// --- last loadout
+	Arsenal = 200;			// --- arsenal
+	FundsTransfer = 200;	// --- funds transfer
+	ResetVoting = 200;		// --- voting reset
+};
+
+// https://community.bistudio.com/wiki/Arma_3:_MP_Warlords#4._Blacklisting_assets_from_AI_purchase_lists (Uncomment if u need this)
+// WLAIRequisitonBlacklist[] = {
+// 	"B_crew_F",
+// 	"B_Helipilot_F",
+// 	"B_Pilot_F",
+// 	"O_crew_F",
+// 	"O_Helipilot_F",
+// 	"O_Pilot_F",
+// 	"B_T_crew_F",
+// 	"B_T_Helipilot_F",
+// 	"B_T_Pilot_F",
+// 	"O_T_crew_F",
+// 	"O_T_Helipilot_F",
+// 	"O_T_Pilot_F"
+// };
